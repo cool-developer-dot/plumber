@@ -2,25 +2,52 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #001b44;
+  --navy: #001b44;
+  --brand-blue: #0066ff;
+  --text-gray: #4b5563;
+  --text-muted: #9ca3af;
+  --border-light: #e5e7eb;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-navy: var(--navy);
+  --color-brand-blue: var(--brand-blue);
+  --color-text-gray: var(--text-gray);
+  --color-text-muted: var(--text-muted);
+  --color-border-light: var(--border-light);
+  --font-sans: var(--font-inter);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+}
+
+@keyframes testimonial-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.testimonial-marquee {
+  animation: testimonial-marquee var(--marquee-duration, 24s) linear infinite;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.testimonial-marquee-paused {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-marquee {
+    animation: none;
+  }
 }
