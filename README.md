@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlowRight Plumbing
 
-## Getting Started
+Premium plumbing services website built with Next.js 15+, TypeScript, Tailwind CSS, and Framer Motion.
 
-First, run the development server:
+## Quick start
+
+Run all commands from the **repository root** (`plumber/`), not a subfolder.
 
 ```bash
+cd plumber
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command        | Description              |
+| -------------- | ------------------------ |
+| `npm run dev`  | Start development server |
+| `npm run build`| Production build         |
+| `npm run start`| Run production server    |
+| `npm run lint` | Run ESLint               |
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+plumber/                          # Repository root (Next.js app lives here)
+├── app/                          # Next.js App Router
+│   ├── areas/[slug]/page.tsx     # Service area landing pages (15 cities)
+│   ├── globals.css               # Global styles & Tailwind
+│   ├── layout.tsx                # Root layout
+│   └── page.tsx                  # Homepage
+├── components/                   # React components
+│   ├── ui/                       # Shared UI primitives
+│   ├── AreaDetailPage.tsx        # Area detail layout
+│   ├── ServiceAreasSection.tsx   # Homepage service areas grid
+│   ├── SiteHeader.tsx            # Shared header for area pages
+│   └── …                         # Homepage sections
+├── lib/                          # Shared logic & data
+│   └── service-areas.ts          # City data, maps URLs, SEO content
+├── public/                       # Static assets
+│   ├── image.png
+│   └── services/                 # Service card images
+├── package.json
+├── next.config.ts
+├── tsconfig.json
+└── postcss.config.mjs
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Connected to [Vercel](https://vercel.com). Pushes to `main` on GitHub trigger automatic deployments.
 
-## Deploy on Vercel
+**Root directory for Vercel:** `.` (repository root)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Service areas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Each city has a dedicated page at `/areas/[slug]`, for example:
+
+- `/areas/mckinney-tx`
+- `/areas/port-st-lucie-fl`
+- `/areas/temecula-ca`

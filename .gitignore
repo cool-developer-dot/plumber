@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# legacy / accidental nested copies (app runs from repo root)
+/plumber-pro/
