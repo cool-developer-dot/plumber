@@ -127,7 +127,7 @@ export default function EmergencyCtaSection() {
             </p>
 
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-              <PrimaryButton href="tel:8887240474">
+              <PrimaryButton href="tel:7732490630">
                 <Phone className="h-4 w-4" strokeWidth={2.25} />
                 Call Now — Available 24/7
               </PrimaryButton>

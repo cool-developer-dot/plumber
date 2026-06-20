@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import Link from "next/link";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { SITE } from "@/lib/site";
 import { SERVICE_CITY_CARDS } from "@/lib/service-areas";
@@ -70,7 +71,7 @@ const LEGAL_LINKS = [
 
 function Logo() {
   return (
-    <a
+    <Link
       href="/"
       className="group inline-flex items-center gap-2.5"
       aria-label="Precision Plumbing Texas home"
@@ -107,7 +108,7 @@ function Logo() {
           PLUMBING TEXAS
         </span>
       </div>
-    </a>
+    </Link>
   );
 }
 

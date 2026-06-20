@@ -237,11 +237,11 @@ function SidebarPanel() {
           </div>
         </div>
         <a
-          href="tel:8887240474"
+          href="tel:7732490630"
           className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-electric-blue px-4 py-2.5 text-[0.85rem] font-semibold text-white transition-colors hover:bg-electric-blue-bright"
         >
           <Phone className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
-          (888) 724-0474
+          (773) 249-0630
         </a>
       </div>
     </aside>

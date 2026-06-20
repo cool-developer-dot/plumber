@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import LocalBusinessJsonLd from "@/components/seo/LocalBusinessJsonLd";
-import MobileCallBar from "@/components/MobileCallBar";
+import MobileConversion from "@/components/MobileConversion";
 import ServiceAreasSection from "@/components/ServiceAreasSection";
 import ServicesSection from "@/components/ServicesSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
@@ -76,7 +76,6 @@ export default function Home() {
       <LocalBusinessJsonLd />
       <main
         id="main-content"
-        className="pb-[calc(5.75rem+env(safe-area-inset-bottom))] lg:pb-0"
       >
         <Hero />
         <ServicesSection />
@@ -87,7 +86,7 @@ export default function Home() {
         <FaqSection />
         <EmergencyCtaSection />
       </main>
-      <MobileCallBar />
+      <MobileConversion />
       <Footer />
     </>
   );

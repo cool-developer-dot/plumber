@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AreaDetailPage from "@/components/AreaDetailPage";
 import Footer from "@/components/Footer";
+import MobileConversion from "@/components/MobileConversion";
 import { getAllAreaSlugs, getAreaBySlug } from "@/lib/service-areas";
 import { SITE } from "@/lib/site";
 
@@ -82,6 +83,7 @@ export default async function AreaPage({ params }: PageProps) {
       <main>
         <AreaDetailPage area={area} />
       </main>
+      <MobileConversion />
       <Footer />
     </>
   );

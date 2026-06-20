@@ -6,8 +6,8 @@ export const SITE = {
     "Premium plumbing in McKinney, Denton, and Rockwall, TX. Flat-rate upfront pricing, licensed background-checked technicians, and live arrival tracking. 24/7 emergency service.",
   url:
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://precisionplumbingtexas.com",
-  phone: "(888) 724-0474",
-  phoneTel: "8887240474",
+  phone: "(773) 249-0630",
+  phoneTel: "7732490630",
   email: "info@precisionplumbingtexas.com",
   address: {
     street: "1200 Commerce Street",

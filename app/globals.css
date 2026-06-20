@@ -97,6 +97,165 @@ body {
   animation-play-state: paused;
 }
 
+/* =====================================================
+   Premium Mobile Conversion System
+     — Floating call button + Sticky CTA bar
+     — Hidden on lg+ screens via container query
+   ===================================================== */
+
+/* ---------- Container: wraps both elements ---------- */
+
+/* ---------- Floating Call Button (bottom-left) ---------- */
+
+.floating-call-button {
+  position: fixed;
+  bottom: 8rem;
+  left: 1.25rem;
+  z-index: 49;
+  display: none;
+}
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .floating-call-button {
+    bottom: calc(8rem + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 1023px) {
+  .floating-call-button {
+    display: block;
+  }
+}
+
+.floating-call-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2D8CFF 0%, #1768D1 100%);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(45, 140, 255, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+}
+
+.floating-call-link:hover,
+.floating-call-link:focus-visible {
+  transform: scale(1.08);
+  box-shadow: 0 8px 32px rgba(45, 140, 255, 0.5);
+}
+
+.floating-call-link:active {
+  transform: scale(0.95);
+}
+
+/* Pulse ring */
+.floating-call-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 3px solid rgba(45, 140, 255, 0.25);
+  animation: call-pulse 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes call-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+
+.floating-call-icon {
+  position: relative;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+}
+
+/* ---------- Sticky Mobile CTA Bar ---------- */
+
+.sticky-mobile-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 48;
+  display: none;
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, rgba(21, 23, 27, 0.97) 0%, #15171B 100%);
+  border-top: 1px solid rgba(45, 140, 255, 0.2);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
+}
+
+@supports not (padding-bottom: env(safe-area-inset-bottom)) {
+  .sticky-mobile-cta {
+    padding-bottom: 0.75rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .sticky-mobile-cta {
+    display: block;
+  }
+}
+
+.sticky-mobile-cta-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2D8CFF 0%, #1768D1 100%);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 4px 24px rgba(45, 140, 255, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sticky-mobile-cta-link:hover,
+.sticky-mobile-cta-link:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 32px rgba(45, 140, 255, 0.55);
+}
+
+.sticky-mobile-cta-link:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 16px rgba(45, 140, 255, 0.3);
+}
+
+.sticky-mobile-cta-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.92;
+  line-height: 1;
+}
+
+.sticky-mobile-cta-number {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .testimonial-marquee {
     animation: none;

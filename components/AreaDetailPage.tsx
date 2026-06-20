@@ -85,6 +85,9 @@ export default function AreaDetailPage({ area }: { area: ServiceArea }) {
     <>
       <SiteHeader />
 
+      {/* Mobile spacer for sticky CTA */}
+      <div className="h-0 lg:hidden" aria-hidden="true" />
+
       {/* Hero banner */}
       <section className="relative h-[220px] overflow-hidden sm:h-[260px] lg:h-[300px]">
         <Image
@@ -122,7 +125,7 @@ export default function AreaDetailPage({ area }: { area: ServiceArea }) {
       </div>
 
       {/* Main content */}
-      <div className="mx-auto max-w-[1320px] px-5 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
+      <div className="mx-auto max-w-[1320px] px-5 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14 pb-[calc(6.5rem+env(safe-area-inset-bottom))] lg:pb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_380px] lg:gap-12 xl:grid-cols-[1fr_420px]">
           {/* Left column */}
           <motion.article
@@ -195,11 +198,11 @@ export default function AreaDetailPage({ area }: { area: ServiceArea }) {
                 plumber in {area.name}.
               </p>
               <a
-                href="tel:8887240474"
+                href="tel:7732490630"
                 className="mt-5 inline-flex items-center gap-2 text-[0.95rem] font-bold text-deep-charcoal transition-colors hover:text-electric-blue"
               >
                 <Phone className="h-4 w-4" strokeWidth={2} aria-hidden />
-                Call (888) 724-0474 for service in {area.name}
+                Call (773) 249-0630 for service in {area.name}
               </a>
             </div>
 
@@ -230,7 +233,7 @@ export default function AreaDetailPage({ area }: { area: ServiceArea }) {
             />
 
             <motion.a
-              href="tel:8887240474"
+              href="tel:7732490630"
               className="mt-10 flex w-full items-center justify-center gap-2 rounded-xl bg-electric-blue px-6 py-3.5 text-[0.9rem] font-bold uppercase tracking-wide text-white shadow-[0_4px_20px_rgba(45,140,255,0.3)]"
               whileHover={{ y: -2, scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
