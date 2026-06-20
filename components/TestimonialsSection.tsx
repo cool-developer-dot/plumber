@@ -8,52 +8,52 @@ const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 const TESTIMONIALS = [
   {
+    name: "Michael Anderson",
+    location: "McKinney, TX",
+    initials: "MA",
+    color: "#2D8CFF",
+    rating: 5,
+    text: "They arrived within an hour for our burst pipe emergency. Professional, courteous, and fixed everything perfectly. Already saved their number for next time.",
+  },
+  {
     name: "Sarah Mitchell",
-    location: "Dallas, TX",
+    location: "Denton, TX",
     initials: "SM",
-    color: "#0066FF",
+    color: "#1768D1",
     rating: 5,
-    text: "They arrived within an hour for our burst pipe emergency. Professional, courteous, and fixed everything perfectly. Highly recommend!",
+    text: "Upfront pricing with no surprises. The technician explained every step and left our kitchen spotless. Best plumbing service we've used in Denton.",
   },
   {
-    name: "James Rodriguez",
-    location: "Houston, TX",
-    initials: "JR",
-    color: "#001B44",
+    name: "David Thompson",
+    location: "Rockwall, TX",
+    initials: "DT",
+    color: "#0B1F3A",
     rating: 5,
-    text: "Upfront pricing with no surprises. The technician explained every step and left our kitchen spotless. Best plumbing service we've used.",
+    text: "Our water heater failed on a Sunday morning. They had a new unit installed by evening. Incredible response time and completely fair pricing.",
   },
   {
-    name: "Emily Chen",
-    location: "Austin, TX",
-    initials: "EC",
-    color: "#3399FF",
+    name: "Jennifer Wilson",
+    location: "McKinney, TX",
+    initials: "JW",
+    color: "#4FA0FF",
     rating: 5,
-    text: "Our water heater died on a Sunday morning. They had a new unit installed by evening. Incredible response time and fair pricing.",
+    text: "From the first phone call to the final walkthrough, everything was seamless. They treat your home with real respect — shoe covers and all.",
   },
   {
-    name: "Michael Thompson",
-    location: "Fort Worth, TX",
-    initials: "MT",
-    color: "#0052CC",
+    name: "Robert Martinez",
+    location: "Denton, TX",
+    initials: "RM",
+    color: "#2D8CFF",
     rating: 5,
-    text: "Had a persistent drain clog for months. One visit from FlowRight and it's been perfect ever since. True professionals.",
+    text: "Had a persistent drain clog for months. One visit from Precision Plumbing and it's been perfect ever since. True professionals.",
   },
   {
-    name: "Lisa Park",
-    location: "Plano, TX",
-    initials: "LP",
-    color: "#0066FF",
+    name: "Emily Johnson",
+    location: "Rockwall, TX",
+    initials: "EJ",
+    color: "#1768D1",
     rating: 5,
-    text: "From the first phone call to the final walkthrough, everything was seamless. They treat your home like their own.",
-  },
-  {
-    name: "David Williams",
-    location: "Arlington, TX",
-    initials: "DW",
-    color: "#001B44",
-    rating: 5,
-    text: "Licensed, insured, and genuinely skilled. They diagnosed a sewer issue other companies missed. Saved us thousands.",
+    text: "Licensed, insured, and genuinely skilled. They diagnosed a sewer issue two other companies missed. Saved us thousands.",
   },
 ] as const;
 
@@ -85,7 +85,7 @@ function TestimonialCard({
 }: (typeof TESTIMONIALS)[number] & { className?: string }) {
   return (
     <article
-      className={`group rounded-2xl border border-white/80 bg-white/75 p-5 shadow-[0_4px_24px_rgba(0,27,68,0.06)] backdrop-blur-md transition-all duration-300 sm:p-6 ${className}`}
+      className={`group rounded-2xl border border-white/80 bg-white/75 p-5 shadow-[0_4px_24px_rgba(21,23,27,0.06)] backdrop-blur-md transition-all duration-300 sm:p-6 ${className}`}
       aria-label={`Review from ${name}`}
     >
       <div className="flex items-start justify-between gap-3">
@@ -98,22 +98,22 @@ function TestimonialCard({
             {initials}
           </div>
           <div className="min-w-0">
-            <p className="truncate text-[0.9rem] font-semibold text-[#001B44]">
+            <p className="truncate text-[0.9rem] font-semibold text-deep-charcoal">
               {name}
             </p>
-            <p className="text-[0.78rem] text-[#9CA3AF]">{location}</p>
+            <p className="text-[0.78rem] text-cool-gray">{location}</p>
           </div>
         </div>
         <StarRating />
       </div>
 
-      <p className="mt-4 text-[0.875rem] leading-relaxed text-[#4B5563]">
+      <p className="mt-4 text-[0.875rem] leading-relaxed text-cool-gray">
         &ldquo;{text}&rdquo;
       </p>
 
-      <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-[#E8F2FF] bg-[#F4F8FF] px-2.5 py-1">
-        <BadgeCheck className="h-3.5 w-3.5 text-[#0066FF]" strokeWidth={2} aria-hidden />
-        <span className="text-[0.68rem] font-semibold text-[#0066FF]">
+      <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-electric-blue/10 bg-electric-blue/[0.06] px-2.5 py-1">
+        <BadgeCheck className="h-3.5 w-3.5 text-electric-blue" strokeWidth={2} aria-hidden />
+        <span className="text-[0.68rem] font-semibold text-electric-blue">
           Verified Customer
         </span>
       </div>
@@ -121,7 +121,7 @@ function TestimonialCard({
   );
 }
 
-/* ─── Mobile / tablet: swipe carousel with auto-play ─── */
+/* Mobile / tablet: swipe carousel with auto-play */
 function MobileTestimonialCarousel() {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -148,6 +148,8 @@ function MobileTestimonialCarousel() {
   }, []);
 
   useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mql.matches) return;
     if (paused) return;
     const id = setInterval(goNext, AUTO_PLAY_MS);
     return () => clearInterval(id);
@@ -192,7 +194,7 @@ function MobileTestimonialCarousel() {
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.15}
             onDragEnd={handleDragEnd}
-            className="touch-pan-y cursor-grab active:cursor-grabbing"
+            className="cursor-grab active:cursor-grabbing"
           >
             <TestimonialCard
               {...TESTIMONIALS[current]}
@@ -210,7 +212,7 @@ function MobileTestimonialCarousel() {
             pauseBriefly();
             goPrev();
           }}
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#EAECEF] bg-white text-[#001B44] shadow-sm transition-colors hover:border-[#D6E8FF] hover:bg-[#F0F7FF] hover:text-[#0066FF]"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[rgba(21,23,27,0.08)] bg-white text-deep-charcoal shadow-sm transition-colors hover:border-electric-blue/20 hover:bg-electric-blue/[0.04] hover:text-electric-blue"
           aria-label="Previous testimonial"
         >
           <ChevronLeft className="h-5 w-5" strokeWidth={2} />
@@ -228,7 +230,7 @@ function MobileTestimonialCarousel() {
               className={`h-2 rounded-full transition-all duration-300 ${
                 i === current
                   ? "w-6 bg-[#0066FF]"
-                  : "w-2 bg-[#D6E8FF] hover:bg-[#0066FF]/40"
+                  : "w-2 bg-electric-blue/20 hover:bg-electric-blue/40"
               }`}
               aria-label={`Go to review ${i + 1} from ${t.name}`}
               aria-current={i === current ? "true" : undefined}
@@ -242,7 +244,7 @@ function MobileTestimonialCarousel() {
             pauseBriefly();
             goNext();
           }}
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#EAECEF] bg-white text-[#001B44] shadow-sm transition-colors hover:border-[#D6E8FF] hover:bg-[#F0F7FF] hover:text-[#0066FF]"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[rgba(21,23,27,0.08)] bg-white text-deep-charcoal shadow-sm transition-colors hover:border-electric-blue/20 hover:bg-electric-blue/[0.04] hover:text-electric-blue"
           aria-label="Next testimonial"
         >
           <ChevronRight className="h-5 w-5" strokeWidth={2} />
@@ -256,7 +258,7 @@ function MobileTestimonialCarousel() {
   );
 }
 
-/* ─── Desktop: infinite marquee ─── */
+/* Desktop: infinite marquee */
 function DesktopTestimonialMarquee() {
   const [paused, setPaused] = useState(false);
   const items = [...TESTIMONIALS, ...TESTIMONIALS];
@@ -309,27 +311,21 @@ export default function TestimonialsSection() {
       aria-labelledby="testimonials-heading"
     >
       <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-8">
-        <motion.header
-          className="mx-auto max-w-2xl text-center"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.55, ease: EASE }}
-        >
-          <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[#0066FF]">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-electric-blue">
             Trusted By Thousands
           </p>
           <h2
             id="testimonials-heading"
-            className="text-[1.85rem] font-bold leading-tight tracking-tight text-[#001B44] sm:text-[2.25rem] lg:text-[2.5rem]"
+            className="text-[1.85rem] font-bold leading-tight tracking-tight text-deep-charcoal sm:text-[2.25rem] lg:text-[2.5rem]"
           >
             What Homeowners Are Saying
           </h2>
-          <p className="mt-4 text-[1rem] leading-relaxed text-[#4B5563] sm:text-[1.05rem]">
-            Real reviews from homeowners across Texas who trust us with their
-            most important plumbing needs.
+          <p className="mt-4 text-[1rem] leading-relaxed text-cool-gray sm:text-[1.05rem]">
+            Real reviews from homeowners in McKinney, Denton, and Rockwall who trust
+            us with their most important plumbing needs.
           </p>
-        </motion.header>
+        </div>
 
         <MobileTestimonialCarousel />
         <DesktopTestimonialMarquee />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { memo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Clock,
@@ -38,7 +38,7 @@ const FAQ_ITEMS = [
   {
     question: "What areas do you serve?",
     answer:
-      "We proudly serve Dallas, Houston, Austin, Fort Worth, Plano, Arlington, and surrounding communities throughout the greater Texas metro areas.",
+      "We proudly serve McKinney, Denton, and Rockwall, Texas — including surrounding neighborhoods in Collin and Denton counties. Same-day and emergency service available in all three cities.",
     icon: MapPin,
   },
   {
@@ -55,45 +55,29 @@ const FAQ_ITEMS = [
   },
 ] as const;
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQ_ITEMS.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.answer,
-    },
-  })),
-};
-
-function ToggleIcon({ isOpen }: { isOpen: boolean }) {
+const ToggleIcon = memo(function ToggleIcon({ isOpen }: { isOpen: boolean }) {
   return (
-    <motion.span
-      className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
-      animate={{ backgroundColor: isOpen ? "#0066FF" : "#F4F8FF" }}
-      transition={{ duration: 0.3, ease: EASE }}
+    <span
+      className={`relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-colors duration-300 ${
+        isOpen ? "bg-electric-blue" : "bg-electric-blue/[0.06]"
+      }`}
       aria-hidden
     >
-      <motion.span
-        className="absolute h-[2px] w-3.5 rounded-full"
-        animate={{ backgroundColor: isOpen ? "#FFFFFF" : "#0066FF" }}
-        transition={{ duration: 0.3 }}
+      <span
+        className={`absolute h-[2px] w-3.5 rounded-full transition-colors duration-300 ${
+          isOpen ? "bg-white" : "bg-electric-blue"
+        }`}
       />
-      <motion.span
-        className="absolute h-3.5 w-[2px] rounded-full"
-        animate={{
-          scaleY: isOpen ? 0 : 1,
-          backgroundColor: isOpen ? "#FFFFFF" : "#0066FF",
-        }}
-        transition={{ duration: 0.25, ease: EASE }}
+      <span
+        className={`absolute h-3.5 w-[2px] rounded-full transition-all duration-250 ${
+          isOpen ? "scale-y-0 bg-white" : "scale-y-100 bg-electric-blue"
+        }`}
       />
-    </motion.span>
+    </span>
   );
-}
+});
 
-function FaqCard({
+const FaqCard = memo(function FaqCard({
   question,
   answer,
   icon: Icon,
@@ -116,40 +100,24 @@ function FaqCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: index * 0.06, ease: EASE }}
-      layout
     >
-      <motion.article
-        layout
-        className={`group relative overflow-hidden rounded-2xl border transition-shadow duration-300 ${
+      <div
+        className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 ${
           isOpen
-            ? "border-[#D6E8FF] bg-white shadow-[0_8px_32px_rgba(0,102,255,0.1)]"
-            : "border-[#EAECEF] bg-white/80 shadow-[0_2px_8px_rgba(0,27,68,0.03)] hover:border-[#D6E8FF] hover:shadow-[0_4px_20px_rgba(0,27,68,0.06)]"
+            ? "border-electric-blue/20 bg-white shadow-[0_8px_32px_rgba(45,140,255,0.1)]"
+            : "border-[rgba(21,23,27,0.08)] bg-white/80 shadow-[0_2px_8px_rgba(21,23,27,0.03)] hover:border-electric-blue/20 hover:shadow-[0_4px_20px_rgba(21,23,27,0.06)]"
         }`}
       >
         {/* Active left accent */}
-        <motion.div
-          className="absolute inset-y-0 left-0 w-1 rounded-l-2xl bg-[#0066FF]"
-          initial={false}
-          animate={{ scaleY: isOpen ? 1 : 0, opacity: isOpen ? 1 : 0 }}
-          transition={{ duration: 0.3, ease: EASE }}
-          style={{ originY: 0.5 }}
+        <div
+          className={`absolute inset-y-0 left-0 w-1 rounded-l-2xl bg-[#0066FF] transition-all duration-300 ${
+            isOpen ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
+          }`}
+          style={{ transformOrigin: "center" }}
           aria-hidden
         />
 
-        {/* Subtle open glow */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#F0F7FF]/80 via-transparent to-transparent"
-              aria-hidden
-            />
-          )}
-        </AnimatePresence>
-
-        <h3 className="relative z-10">
+        <h3>
           <button
             type="button"
             onClick={onToggle}
@@ -160,34 +128,35 @@ function FaqCard({
             <div className="flex shrink-0 flex-col items-center gap-2">
               <span
                 className={`text-[0.65rem] font-bold tracking-widest transition-colors duration-300 ${
-                  isOpen ? "text-[#0066FF]" : "text-[#C5D5E8]"
+                  isOpen ? "text-electric-blue" : "text-cool-gray/40"
                 }`}
                 aria-hidden
               >
                 {number}
               </span>
-              <motion.div
-                className="flex h-10 w-10 items-center justify-center rounded-xl border"
-                animate={{
-                  borderColor: isOpen ? "#D6E8FF" : "#EAECEF",
-                  backgroundColor: isOpen ? "#E8F2FF" : "#FAFBFC",
-                }}
-                transition={{ duration: 0.3 }}
+              <div
+                className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-all duration-300 ${
+                  isOpen
+                    ? "border-electric-blue/20 bg-electric-blue/10"
+                    : "border-[rgba(21,23,27,0.08)] bg-soft-white/80"
+                }`}
               >
                 <Icon
                   className={`h-4 w-4 transition-colors duration-300 ${
-                    isOpen ? "text-[#0066FF]" : "text-[#6B7280]"
+                    isOpen ? "text-electric-blue" : "text-cool-gray"
                   }`}
                   strokeWidth={1.75}
                   aria-hidden
                 />
-              </motion.div>
+              </div>
             </div>
 
             <div className="min-w-0 flex-1 pt-0.5">
               <span
                 className={`block text-[0.95rem] font-semibold leading-snug transition-colors duration-300 sm:text-[1rem] ${
-                  isOpen ? "text-[#0066FF]" : "text-[#001B44] group-hover:text-[#0066FF]"
+                  isOpen
+                    ? "text-electric-blue"
+                    : "text-deep-charcoal group-hover:text-electric-blue"
                 }`}
               >
                 {question}
@@ -208,40 +177,34 @@ function FaqCard({
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.38, ease: EASE }}
-              className="relative z-10 overflow-hidden"
+              className="overflow-hidden"
             >
               <div className="border-t border-[#F0F4F8] px-5 pb-5 pt-4 sm:px-6 sm:pb-6 sm:pl-[5.5rem]">
-                <p className="text-[0.875rem] leading-[1.7] text-[#4B5563]">
+                <p className="text-[0.875rem] leading-[1.7] text-cool-gray">
                   {answer}
                 </p>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.article>
+      </div>
     </motion.div>
   );
-}
+});
 
 function SidebarPanel() {
   return (
-    <motion.aside
-      className="lg:sticky lg:top-28 lg:self-start"
-      initial={{ opacity: 0, x: -24 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, ease: EASE }}
-    >
-      <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[#0066FF]">
+    <aside className="lg:sticky lg:top-28 lg:self-start">
+      <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-electric-blue">
         Frequently Asked Questions
       </p>
       <h2
         id="faq-heading"
-        className="text-[1.85rem] font-bold leading-[1.15] tracking-tight text-[#001B44] sm:text-[2.25rem] lg:text-[2.4rem]"
+        className="text-[1.85rem] font-bold leading-[1.15] tracking-tight text-deep-charcoal sm:text-[2.25rem] lg:text-[2.4rem]"
       >
         Answers To Common Plumbing Questions
       </h2>
-      <p className="mt-4 text-[0.95rem] leading-relaxed text-[#6B7280]">
+      <p className="mt-4 text-[0.95rem] leading-relaxed text-cool-gray">
         Everything you need to know before booking — clear answers from our
         team, no jargon.
       </p>
@@ -251,7 +214,7 @@ function SidebarPanel() {
         {["24/7 Support", "Licensed Pros", "Upfront Pricing"].map((tag) => (
           <span
             key={tag}
-            className="rounded-full border border-[#E8F2FF] bg-[#F4F8FF] px-3 py-1 text-[0.72rem] font-semibold text-[#0066FF]"
+            className="rounded-full border border-electric-blue/10 bg-electric-blue/[0.06] px-3 py-1 text-[0.72rem] font-semibold text-electric-blue"
           >
             {tag}
           </span>
@@ -259,35 +222,29 @@ function SidebarPanel() {
       </div>
 
       {/* Contact card */}
-      <motion.div
-        className="mt-10 overflow-hidden rounded-2xl border border-[#EAECEF] bg-white p-5 shadow-[0_4px_20px_rgba(0,27,68,0.05)]"
-        whileHover={{ y: -2, boxShadow: "0 8px 28px rgba(0,27,68,0.08)" }}
-        transition={{ type: "spring", stiffness: 400, damping: 28 }}
-      >
+      <div className="mt-10 overflow-hidden rounded-2xl border border-[rgba(21,23,27,0.08)] bg-white p-5 shadow-[0_4px_20px_rgba(21,23,27,0.05)] transition-shadow duration-300 hover:shadow-[0_8px_28px_rgba(21,23,27,0.08)]">
         <div className="flex items-start gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#F4F8FF] text-[#0066FF]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-electric-blue/[0.06] text-electric-blue">
             <MessageCircle className="h-5 w-5" strokeWidth={1.75} aria-hidden />
           </div>
           <div>
-            <p className="text-[0.9rem] font-semibold text-[#001B44]">
+            <p className="text-[0.9rem] font-semibold text-deep-charcoal">
               Still have questions?
             </p>
-            <p className="mt-0.5 text-[0.8rem] text-[#9CA3AF]">
+            <p className="mt-0.5 text-[0.8rem] text-cool-gray">
               Our team is happy to help — 24/7.
             </p>
           </div>
         </div>
-        <motion.a
+        <a
           href="tel:8887240474"
-          className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-[#001B44] px-4 py-2.5 text-[0.85rem] font-semibold text-white"
-          whileHover={{ scale: 1.02, backgroundColor: "#002a5c" }}
-          whileTap={{ scale: 0.98 }}
+          className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-electric-blue px-4 py-2.5 text-[0.85rem] font-semibold text-white transition-colors hover:bg-electric-blue-bright"
         >
           <Phone className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
           (888) 724-0474
-        </motion.a>
-      </motion.div>
-    </motion.aside>
+        </a>
+      </div>
+    </aside>
   );
 }
 
@@ -299,27 +256,22 @@ export default function FaqSection() {
       className="relative overflow-hidden bg-white py-20 sm:py-24 lg:py-28"
       aria-labelledby="faq-heading"
     >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-
       {/* Background texture */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        className="pointer-events-none absolute left-0 inset-0 opacity-[0.35]"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 1px 1px, #E8F2FF 1px, transparent 0)",
+            "radial-gradient(circle at 1px 1px, rgba(45,140,255,0.15) 1px, transparent 0)",
           backgroundSize: "28px 28px",
         }}
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute -right-32 top-20 h-96 w-96 rounded-full bg-[#0066FF]/[0.04] blur-3xl"
+        className="pointer-events-none absolute -right-32 top-20 h-96 w-96 rounded-full bg-electric-blue/[0.04] blur-3xl"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute -left-24 bottom-10 h-72 w-72 rounded-full bg-[#0066FF]/[0.03] blur-3xl"
+        className="pointer-events-none absolute -left-24 bottom-10 h-72 w-72 rounded-full bg-electric-blue/[0.03] blur-3xl"
         aria-hidden
       />
 

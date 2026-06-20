@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { memo } from "react";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
-
-const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
+import { SITE } from "@/lib/site";
+import { SERVICE_CITY_CARDS } from "@/lib/service-areas";
 
 function SocialIcon({ name }: { name: string }) {
   const className = "h-4 w-4";
@@ -39,10 +39,10 @@ function SocialIcon({ name }: { name: string }) {
 
 const QUICK_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Services", href: "/services" },
-  { label: "Locations", href: "/locations" },
-  { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
+  { label: "Services", href: "/#services-heading" },
+  { label: "Locations", href: "/#service-areas-heading" },
+  { label: "About", href: "/#why-choose-heading" },
+  { label: "Reviews", href: "/#testimonials-heading" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
@@ -68,21 +68,12 @@ const LEGAL_LINKS = [
   { label: "Sitemap", href: "/sitemap" },
 ] as const;
 
-const columnVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, delay: i * 0.1, ease: EASE },
-  }),
-};
-
-function FlowRightLogo() {
+function Logo() {
   return (
     <a
       href="/"
       className="group inline-flex items-center gap-2.5"
-      aria-label="FlowRight Plumbing home"
+      aria-label="Precision Plumbing Texas home"
     >
       <svg
         width="36"
@@ -92,245 +83,230 @@ function FlowRightLogo() {
         aria-hidden
         className="shrink-0 transition-transform duration-300 group-hover:scale-105"
       >
+        <rect x="2" y="2" width="32" height="32" rx="8" fill="#2D8CFF" />
         <path
-          d="M18 4C12.5 11 8 16.2 8 21.5a10 10 0 1020 0C28 16.2 23.5 11 18 4z"
-          fill="#0066FF"
+          d="M10 28L18 8L26 28"
+          stroke="white"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
-          d="M18 12c-2.8 3.2-4.5 5.5-4.5 7.8a4.5 4.5 0 109 0c0-2.3-1.7-4.6-4.5-7.8z"
-          fill="white"
-          opacity="0.35"
-        />
-        <path
-          d="M20.5 14.5a5 5 0 10-5 8.66"
+          d="M13 21L23 21"
           stroke="white"
           strokeWidth="2"
           strokeLinecap="round"
         />
-        <path
-          d="M17 17.5l2 2 3.5-3.5"
-          stroke="white"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <circle cx="18" cy="18" r="2" fill="white" fillOpacity="0.3" />
       </svg>
       <div className="leading-none">
-        <span className="block text-[1.05rem] font-bold tracking-tight text-[#001B44] transition-colors group-hover:text-[#0066FF]">
-          FlowRight
+        <span className="block text-[1.05rem] font-bold tracking-tight text-soft-white transition-colors group-hover:text-electric-blue-bright">
+          Precision
         </span>
-        <span className="mt-0.5 block text-[0.58rem] font-semibold tracking-[0.22em] text-[#0066FF]">
-          PLUMBING
+        <span className="mt-0.5 block text-[0.58rem] font-semibold tracking-[0.22em] text-electric-blue">
+          PLUMBING TEXAS
         </span>
       </div>
     </a>
   );
 }
 
-function FooterLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <motion.a
-      href={href}
-      className="group inline-flex items-center text-[0.875rem] text-[#6B7280] transition-colors hover:text-[#0066FF]"
-      whileHover={{ x: 3 }}
-      transition={{ type: "spring", stiffness: 400, damping: 28 }}
-    >
-      <span className="relative">
-        {children}
-        <span className="absolute -bottom-px left-0 h-px w-0 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
-      </span>
-    </motion.a>
-  );
-}
-
-function FooterColumn({
-  title,
-  children,
-  index,
-  className = "",
-}: {
-  title?: string;
-  children: React.ReactNode;
-  index: number;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      custom={index}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-40px" }}
-      variants={columnVariants}
-      className={className}
-    >
-      {title && (
-        <h3 className="mb-5 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[#001B44]">
-          {title}
-        </h3>
-      )}
-      {children}
-    </motion.div>
-  );
-}
-
-export default function Footer() {
+export default memo(function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-white" role="contentinfo">
+    <footer className="relative bg-deep-charcoal">
       {/* Top gradient divider */}
       <div
-        className="h-px w-full bg-gradient-to-r from-transparent via-[#D6E8FF] to-transparent"
+        className="h-px w-full bg-gradient-to-r from-transparent via-electric-blue/20 to-transparent"
         aria-hidden
       />
 
       <div className="mx-auto max-w-[1320px] px-5 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10 xl:gap-12">
           {/* Column 1 — Brand */}
-          <FooterColumn index={0} className="lg:col-span-4">
-            <FlowRightLogo />
-            <p className="mt-5 max-w-xs text-[0.875rem] leading-relaxed text-[#6B7280]">
-              Texas&apos;s trusted plumbing experts — delivering fast, reliable,
-              and transparent service to homeowners since 2004.
+          <div className="lg:col-span-4">
+            <Logo />
+            <p className="mt-5 max-w-xs text-[0.875rem] leading-relaxed text-metallic-silver">
+              Your Trusted Local Plumbing Experts — flat-rate pricing, licensed
+              technicians, and live arrival tracking since {SITE.foundingYear}.
             </p>
-            <p className="mt-3 text-[0.8rem] font-medium text-[#001B44]">
+            <p className="mt-3 text-[0.8rem] font-medium text-electric-blue">
               Licensed · Insured · Satisfaction Guaranteed
             </p>
 
             <div className="mt-6 flex items-center gap-2">
               {SOCIAL_LINKS.map(({ label, href }) => (
-                <motion.a
+                <a
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#EAECEF] bg-[#FAFBFC] text-[#6B7280] transition-colors hover:border-[#D6E8FF] hover:bg-[#F0F7FF] hover:text-[#0066FF]"
-                  whileHover={{ y: -2, scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 22 }}
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-soft-white/[0.08] bg-white/[0.04] text-metallic-silver transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:border-electric-blue/20 hover:bg-electric-blue/[0.1] hover:text-electric-blue-bright"
                 >
                   <SocialIcon name={label} />
-                </motion.a>
+                </a>
               ))}
             </div>
-          </FooterColumn>
+          </div>
 
           {/* Column 2 — Quick Links */}
-          <FooterColumn title="Quick Links" index={1} className="lg:col-span-2">
+          <div>
+            <h3 className="mb-5 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-electric-blue">
+              Quick Links
+            </h3>
             <ul className="flex flex-col gap-3">
               {QUICK_LINKS.map((link) => (
                 <li key={link.label}>
-                  <FooterLink href={link.href}>{link.label}</FooterLink>
+                  <a
+                    href={link.href}
+                    className="group inline-flex items-center text-[0.875rem] text-metallic-silver transition-colors hover:text-electric-blue-bright"
+                  >
+                    <span className="relative">
+                      {link.label}
+                      <span className="absolute -bottom-px left-0 h-px w-0 bg-electric-blue transition-all duration-300 group-hover:w-full" />
+                    </span>
+                  </a>
                 </li>
               ))}
             </ul>
-          </FooterColumn>
+          </div>
 
-          {/* Column 3 — Services */}
-          <FooterColumn title="Services" index={2} className="lg:col-span-3">
+          {/* Column 3 — Service Areas */}
+          <div>
+            <h3 className="mb-5 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-electric-blue">
+              Service Areas
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {SERVICE_CITY_CARDS.map((area) => (
+                <li key={area.slug}>
+                  <a
+                    href={`/areas/${area.slug}`}
+                    className="group inline-flex items-center text-[0.875rem] text-metallic-silver transition-colors hover:text-electric-blue-bright"
+                  >
+                    <span className="relative">
+                      {area.name}, {area.stateAbbr}
+                      <span className="absolute -bottom-px left-0 h-px w-0 bg-electric-blue transition-all duration-300 group-hover:w-full" />
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4 — Services */}
+          <div>
+            <h3 className="mb-5 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-electric-blue">
+              Services
+            </h3>
             <ul className="flex flex-col gap-3">
               {SERVICE_LINKS.map((link) => (
                 <li key={link.label}>
-                  <FooterLink href={link.href}>{link.label}</FooterLink>
+                  <a
+                    href={link.href}
+                    className="group inline-flex items-center text-[0.875rem] text-metallic-silver transition-colors hover:text-electric-blue-bright"
+                  >
+                    <span className="relative">
+                      {link.label}
+                      <span className="absolute -bottom-px left-0 h-px w-0 bg-electric-blue transition-all duration-300 group-hover:w-full" />
+                    </span>
+                  </a>
                 </li>
               ))}
             </ul>
-          </FooterColumn>
+          </div>
 
-          {/* Column 4 — Contact */}
-          <FooterColumn title="Contact" index={3} className="lg:col-span-3">
+          {/* Column 5 — Contact */}
+          <div>
+            <h3 className="mb-5 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-electric-blue">
+              Contact
+            </h3>
             <ul className="flex flex-col gap-4">
               <li>
-                <motion.a
-                  href="tel:8887240474"
+                <a
+                  href={`tel:${SITE.phoneTel}`}
                   className="group flex items-start gap-3"
-                  whileHover={{ x: 3 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 28 }}
                 >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F4F8FF] text-[#0066FF] transition-colors group-hover:bg-[#0066FF] group-hover:text-white">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-electric-blue/[0.1] text-electric-blue transition-colors group-hover:bg-electric-blue group-hover:text-white">
                     <Phone className="h-4 w-4" strokeWidth={1.75} aria-hidden />
                   </span>
                   <span>
-                    <span className="block text-[0.72rem] font-medium uppercase tracking-wider text-[#9CA3AF]">
+                    <span className="block text-[0.72rem] font-medium uppercase tracking-wider text-cool-gray">
                       Phone
                     </span>
-                    <span className="mt-0.5 block text-[0.9rem] font-semibold text-[#001B44] group-hover:text-[#0066FF]">
-                      (888) 724-0474
+                    <span className="mt-0.5 block text-[0.9rem] font-semibold text-soft-white group-hover:text-electric-blue-bright">
+                      {SITE.phone}
                     </span>
                   </span>
-                </motion.a>
+                </a>
               </li>
               <li>
-                <motion.a
-                  href="mailto:info@flowrightplumbing.com"
+                <a
+                  href={`mailto:${SITE.email}`}
                   className="group flex items-start gap-3"
-                  whileHover={{ x: 3 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 28 }}
                 >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F4F8FF] text-[#0066FF] transition-colors group-hover:bg-[#0066FF] group-hover:text-white">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-electric-blue/[0.1] text-electric-blue transition-colors group-hover:bg-electric-blue group-hover:text-white">
                     <Mail className="h-4 w-4" strokeWidth={1.75} aria-hidden />
                   </span>
                   <span>
-                    <span className="block text-[0.72rem] font-medium uppercase tracking-wider text-[#9CA3AF]">
+                    <span className="block text-[0.72rem] font-medium uppercase tracking-wider text-cool-gray">
                       Email
                     </span>
-                    <span className="mt-0.5 block text-[0.875rem] font-medium text-[#001B44] group-hover:text-[#0066FF]">
-                      info@flowrightplumbing.com
+                    <span className="mt-0.5 block text-[0.875rem] font-medium text-soft-white group-hover:text-electric-blue-bright">
+                      {SITE.email}
                     </span>
                   </span>
-                </motion.a>
+                </a>
               </li>
               <li className="flex items-start gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F4F8FF] text-[#0066FF]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-electric-blue/[0.1] text-electric-blue">
                   <MapPin className="h-4 w-4" strokeWidth={1.75} aria-hidden />
                 </span>
                 <span>
-                  <span className="block text-[0.72rem] font-medium uppercase tracking-wider text-[#9CA3AF]">
-                    Office
+                  <span className="block text-[0.72rem] font-medium uppercase tracking-wider text-cool-gray">
+                    Service Area
                   </span>
-                  <span className="mt-0.5 block text-[0.875rem] leading-relaxed text-[#4B5563]">
-                    1200 Commerce Street
+                  <span className="mt-0.5 block text-[0.875rem] leading-relaxed text-metallic-silver">
+                    McKinney, Denton &amp; Rockwall
                     <br />
-                    Dallas, TX 75201
+                    North Texas
                   </span>
                 </span>
               </li>
             </ul>
 
-            <motion.div
-              className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#D6E8FF] bg-[#F0F7FF] px-3.5 py-1.5"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 400, damping: 22 }}
-            >
+            <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-electric-blue/20 bg-electric-blue/[0.06] px-3.5 py-1.5">
               <span className="relative flex h-2 w-2" aria-hidden>
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0066FF] opacity-40" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#0066FF]" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-electric-blue opacity-40" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-electric-blue" />
               </span>
-              <Clock className="h-3.5 w-3.5 text-[#0066FF]" strokeWidth={2} aria-hidden />
-              <span className="text-[0.72rem] font-semibold text-[#0066FF]">
+              <Clock className="h-3.5 w-3.5 text-electric-blue" strokeWidth={2} aria-hidden />
+              <span className="text-[0.72rem] font-semibold text-electric-blue">
                 24/7 Emergency Available
               </span>
-            </motion.div>
-          </FooterColumn>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-[#EAECEF] bg-[#FAFBFC]">
+      <div className="border-t border-soft-white/[0.06] bg-deep-charcoal/80">
         <div className="mx-auto flex max-w-[1320px] flex-col items-center justify-between gap-4 px-5 py-6 sm:flex-row sm:px-6 lg:px-8">
-          <p className="text-center text-[0.8rem] text-[#9CA3AF] sm:text-left">
-            &copy; {year} FlowRight Plumbing. All rights reserved.
+          <p className="text-center text-[0.8rem] text-cool-gray sm:text-left">
+            &copy; {year} Precision Plumbing Texas. All rights reserved.
           </p>
           <nav aria-label="Legal navigation">
             <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
               {LEGAL_LINKS.map((link) => (
                 <li key={link.label}>
-                  <FooterLink href={link.href}>{link.label}</FooterLink>
+                  <a
+                    href={link.href}
+                    className="group inline-flex items-center text-[0.875rem] text-metallic-silver transition-colors hover:text-electric-blue-bright"
+                  >
+                    <span className="relative">
+                      {link.label}
+                      <span className="absolute -bottom-px left-0 h-px w-0 bg-electric-blue transition-all duration-300 group-hover:w-full" />
+                    </span>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -339,4 +315,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+});

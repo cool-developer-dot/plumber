@@ -1,13 +1,49 @@
 @import "tailwindcss";
 
 :root {
+  /* Primary Colors */
+  --deep-charcoal: #15171B;
+  --rich-navy: #0B1F3A;
+  --electric-blue: #2D8CFF;
+
+  /* Secondary Colors */
+  --deep-navy-tint: #13294B;
+  --slate-blue: #3A5A85;
+
+  /* Accent Colors */
+  --electric-blue-bright: #4FA0FF;
+  --signal-amber: #F2A33C;
+
+  /* Neutral Colors */
+  --metallic-silver: #B7BCC4;
+  --cool-gray: #7C828C;
+  --soft-white: #F4F6F8;
+
+  /* Text Colors */
+  --text-primary-dark: #F4F6F8;
+  --text-secondary-dark: #B7BCC4;
+  --text-primary-light: #15171B;
+  --text-link: #2D8CFF;
+  --text-link-dark: #1768D1;
+
+  /* Background Colors */
+  --bg-dark: #15171B;
+  --bg-dark-elevated: #0B1F3A;
+  --bg-light: #F4F6F8;
+  --bg-light-elevated: #FFFFFF;
+
+  /* Border Colors */
+  --border-dark: rgba(183, 188, 196, 0.15);
+  --border-light: rgba(21, 23, 27, 0.08);
+
+  /* Legacy variables (kept for existing component compatibility) */
   --background: #ffffff;
-  --foreground: #001b44;
-  --navy: #001b44;
-  --brand-blue: #0066ff;
-  --text-gray: #4b5563;
-  --text-muted: #9ca3af;
-  --border-light: #e5e7eb;
+  --foreground: #15171B;
+  --navy: #0B1F3A;
+  --brand-blue: #2D8CFF;
+  --text-gray: #7C828C;
+  --text-muted: #B7BCC4;
+  --border-light-v2: rgba(21, 23, 27, 0.08);
 }
 
 @theme inline {
@@ -17,14 +53,29 @@
   --color-brand-blue: var(--brand-blue);
   --color-text-gray: var(--text-gray);
   --color-text-muted: var(--text-muted);
-  --color-border-light: var(--border-light);
+  --color-border-light: var(--border-light-v2);
   --font-sans: var(--font-inter);
+  --font-display: var(--font-inter-display);
+
+  /* Brand tokens */
+  --color-deep-charcoal: #15171B;
+  --color-rich-navy: #0B1F3A;
+  --color-electric-blue: #2D8CFF;
+  --color-deep-navy-tint: #13294B;
+  --color-slate-blue: #3A5A85;
+  --color-electric-blue-bright: #4FA0FF;
+  --color-signal-amber: #F2A33C;
+  --color-metallic-silver: #B7BCC4;
+  --color-cool-gray: #7C828C;
+  --color-soft-white: #F4F6F8;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg-light);
+  color: var(--text-primary-light);
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @keyframes testimonial-marquee {
@@ -50,4 +101,23 @@ body {
   .testimonial-marquee {
     animation: none;
   }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Selection color */
+::selection {
+  background: rgba(45, 140, 255, 0.2);
+  color: var(--text-primary-light);
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid var(--electric-blue);
+  outline-offset: 2px;
 }

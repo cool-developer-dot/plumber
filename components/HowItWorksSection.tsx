@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { memo, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { CircleCheck, PhoneCall, Truck, type LucideIcon } from "lucide-react";
 
@@ -16,15 +16,13 @@ const STEPS = [
   {
     number: "02",
     title: "Expert Arrives Fast",
-    description:
-      "A licensed plumber arrives fully equipped and ready to help.",
+    description: "A licensed plumber arrives fully equipped and ready to help.",
     icon: Truck,
   },
   {
     number: "03",
     title: "Problem Solved",
-    description:
-      "We diagnose, repair, and ensure everything works perfectly.",
+    description: "We diagnose, repair, and ensure everything works perfectly.",
     icon: CircleCheck,
   },
 ] as const;
@@ -47,31 +45,25 @@ const stepVariants = {
 
 function SectionHeader() {
   return (
-    <motion.header
-      className="mx-auto max-w-2xl text-center"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.55, ease: EASE }}
-    >
-      <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[#0066FF]">
+    <div className="mx-auto max-w-2xl text-center">
+      <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-electric-blue">
         Simple &amp; Hassle-Free Process
       </p>
       <h2
         id="how-it-works-heading"
-        className="text-[1.85rem] font-bold leading-tight tracking-tight text-[#001B44] sm:text-[2.25rem] lg:text-[2.5rem]"
+        className="text-[1.85rem] font-bold leading-tight tracking-tight text-deep-charcoal sm:text-[2.25rem] lg:text-[2.5rem]"
       >
         Get Professional Plumbing Help In 3 Easy Steps
       </h2>
-      <p className="mt-4 text-[1rem] leading-relaxed text-[#4B5563] sm:text-[1.05rem]">
+      <p className="mt-4 text-[1rem] leading-relaxed text-cool-gray sm:text-[1.05rem]">
         Fast scheduling, expert technicians, and lasting repairs — all with zero
         hassle.
       </p>
-    </motion.header>
+    </div>
   );
 }
 
-function ProcessStep({
+const ProcessStep = memo(function ProcessStep({
   number,
   title,
   description,
@@ -99,30 +91,14 @@ function ProcessStep({
       </span>
 
       {/* Icon node */}
-      <motion.div
-        className="relative z-10 -mt-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#EAECEF] bg-white text-[#0066FF] shadow-[0_4px_20px_rgba(0,27,68,0.06)]"
-        whileHover={{
-          y: -4,
-          boxShadow: "0 8px 28px rgba(0,102,255,0.12)",
-          borderColor: "#D6E8FF",
-        }}
-        transition={{ type: "spring", stiffness: 400, damping: 24 }}
-      >
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          transition={{ type: "spring", stiffness: 400, damping: 20 }}
-        >
-          <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden />
-        </motion.div>
+      <div className="relative z-10 -mt-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-[rgba(21,23,27,0.08)] bg-white text-electric-blue shadow-[0_4px_20px_rgba(21,23,27,0.06)] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-electric-blue/20 group-hover:shadow-[0_8px_28px_rgba(45,140,255,0.12)]">
+        <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden />
+      </div>
 
-        {/* Node ring accent */}
-        <span className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-[#0066FF]/0 transition-all duration-300 group-hover:ring-[#0066FF]/10" />
-      </motion.div>
-
-      <h3 className="mt-6 text-[1.05rem] font-semibold text-[#001B44] transition-colors group-hover:text-[#0066FF]">
+      <h3 className="mt-6 text-[1.05rem] font-semibold text-deep-charcoal transition-colors group-hover:text-electric-blue">
         {title}
       </h3>
-      <p className="mt-2 max-w-[260px] text-[0.875rem] leading-relaxed text-[#6B7280]">
+      <p className="mt-2 max-w-[260px] text-[0.875rem] leading-relaxed text-cool-gray">
         {description}
       </p>
 
@@ -144,7 +120,7 @@ function ProcessStep({
       )}
     </motion.article>
   );
-}
+});
 
 function DesktopTimeline() {
   const ref = useRef<HTMLDivElement>(null);
@@ -160,7 +136,7 @@ function DesktopTimeline() {
       <div className="absolute inset-0 bg-[#E5E7EB]" />
       {/* Animated progress */}
       <motion.div
-        className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#0066FF] via-[#3399FF] to-[#0066FF]"
+        className="absolute inset-y-0 left-0 bg-gradient-to-r from-electric-blue via-electric-blue-bright to-electric-blue"
         initial={{ width: "0%" }}
         animate={{ width: isInView ? "100%" : "0%" }}
         transition={{ duration: 1.4, delay: 0.35, ease: EASE }}
@@ -172,7 +148,9 @@ function DesktopTimeline() {
           className="absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-[#0066FF] shadow-sm"
           style={{ left: `${i * 50}%` }}
           initial={{ scale: 0, opacity: 0 }}
-          animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+          animate={
+            isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }
+          }
           transition={{ duration: 0.35, delay: 0.5 + i * 0.25, ease: EASE }}
         />
       ))}
@@ -183,7 +161,7 @@ function DesktopTimeline() {
 export default function HowItWorksSection() {
   return (
     <section
-      className="bg-[#FAFBFC] py-20 sm:py-24 lg:py-28"
+      className="bg-soft-white py-20 sm:py-24 lg:py-28"
       aria-labelledby="how-it-works-heading"
     >
       <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-8">
@@ -201,7 +179,7 @@ export default function HowItWorksSection() {
             aria-label="How our plumbing service works in three steps"
           >
             {STEPS.map((step, i) => (
-              <li key={step.number} className="contents">
+              <li key={step.number}>
                 <ProcessStep {...step} index={i} />
               </li>
             ))}

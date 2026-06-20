@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import {
@@ -18,7 +19,7 @@ const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 const SERVICES = [
   {
     title: "Emergency Plumbing",
-    description: "24/7 rapid response for urgent plumbing crises.",
+    description: "24/7 rapid response for urgent plumbing crises. Licensed technicians dispatched immediately.",
     href: "/services/emergency-plumbing",
     icon: Zap,
     image: "/services/emergency-plumbing.jpg",
@@ -26,7 +27,7 @@ const SERVICES = [
   },
   {
     title: "Leak Repair",
-    description: "Precision detection and lasting leak solutions.",
+    description: "Precision detection and lasting leak solutions. We find the source and fix it right.",
     href: "/services/leak-repair",
     icon: Droplets,
     image: "/services/leak-repair.jpg",
@@ -34,7 +35,7 @@ const SERVICES = [
   },
   {
     title: "Drain Cleaning",
-    description: "Clear blockages and restore full water flow.",
+    description: "Clear blockages and restore full water flow with advanced drain technology.",
     href: "/services/drain-cleaning",
     icon: Waves,
     image: "/services/drain-cleaning.jpg",
@@ -42,7 +43,7 @@ const SERVICES = [
   },
   {
     title: "Water Heater Services",
-    description: "Expert install, repair, and maintenance.",
+    description: "Expert installation, repair, and maintenance for tank and tankless systems.",
     href: "/services/water-heater",
     icon: Flame,
     image: "/services/water-heater.jpg",
@@ -50,7 +51,7 @@ const SERVICES = [
   },
   {
     title: "Pipe Repair",
-    description: "Durable repairs for every pipe system.",
+    description: "Durable repairs for every pipe system — copper, PVC, PEX, and more.",
     href: "/services/pipe-repair",
     icon: Wrench,
     image: "/services/pipe-repair.jpg",
@@ -58,7 +59,7 @@ const SERVICES = [
   },
   {
     title: "Sewer Line Services",
-    description: "Advanced diagnostics and sewer solutions.",
+    description: "Advanced diagnostics and complete sewer solutions with camera inspection.",
     href: "/services/sewer-line",
     icon: ShieldCheck,
     image: "/services/sewer-line.jpg",
@@ -84,31 +85,27 @@ const itemVariants = {
 
 function SectionHeader() {
   return (
-    <motion.div
+    <div
       className="mx-auto max-w-2xl text-center"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.55, ease: EASE }}
     >
-      <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[#0066FF]">
-        Services &amp; Service Areas
+      <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-electric-blue">
+        Services
       </p>
       <h2
         id="services-heading"
-        className="text-[1.85rem] font-bold leading-tight tracking-tight text-[#001B44] sm:text-[2.25rem] lg:text-[2.5rem]"
+        className="text-[1.85rem] font-bold leading-tight tracking-tight text-deep-charcoal sm:text-[2.25rem] lg:text-[2.5rem]"
       >
-        Professional Plumbing Services Across Your Area
+        Professional Plumbing Services Across Texas
       </h2>
-      <p className="mt-4 text-[1rem] leading-relaxed text-[#4B5563] sm:text-[1.05rem]">
-        From emergency repairs to full system upgrades — licensed technicians
-        delivering fast, reliable service throughout Texas.
+      <p className="mt-4 text-[1rem] leading-relaxed text-cool-gray sm:text-[1.05rem]">
+        From emergency repairs to premium installations — licensed technicians
+        serving McKinney, Denton, and Rockwall with upfront pricing.
       </p>
-    </motion.div>
+    </div>
   );
 }
 
-function ServiceCard({
+const ServiceCard = memo(function ServiceCard({
   title,
   description,
   href,
@@ -127,42 +124,37 @@ function ServiceCard({
     <motion.a
       href={href}
       variants={itemVariants}
-      className="group relative flex flex-col overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-[0_2px_8px_rgba(0,27,68,0.06)] transition-shadow duration-300 hover:border-[#D6E8FF] hover:shadow-[0_12px_40px_rgba(0,27,68,0.14)]"
+      className="group relative flex flex-col overflow-hidden rounded-xl border border-[rgba(21,23,27,0.08)] bg-white shadow-[0_2px_8px_rgba(21,23,27,0.04)] transition-shadow duration-300 hover:border-electric-blue/20 hover:shadow-[0_12px_40px_rgba(21,23,27,0.1)]"
       whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 400, damping: 28 }}
     >
-      {/* Image header — always fully visible */}
       <div className="relative h-44 w-full shrink-0 overflow-hidden sm:h-48">
         <Image
           src={image}
           alt={imageAlt}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          loading="lazy"
+          quality={75}
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#001B44]/50 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-[#0066FF]/0 transition-colors duration-500 group-hover:bg-[#0066FF]/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/50 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-electric-blue/0 transition-colors duration-500 group-hover:bg-electric-blue/10" />
 
-        {/* Floating icon on image */}
-        <motion.div
-          className="absolute bottom-3 left-4 flex h-11 w-11 items-center justify-center rounded-xl border border-white/30 bg-white/95 text-[#0066FF] shadow-lg backdrop-blur-sm"
-          whileHover={{ scale: 1.08 }}
-          transition={{ type: "spring", stiffness: 400, damping: 22 }}
-        >
+        <div className="absolute bottom-3 left-4 flex h-11 w-11 items-center justify-center rounded-xl border border-white/30 bg-white/95 text-electric-blue shadow-lg backdrop-blur-sm">
           <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
-        </motion.div>
+        </div>
       </div>
 
-      {/* Text content — solid white, always readable */}
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <h3 className="text-[1rem] font-semibold text-[#001B44] transition-colors group-hover:text-[#0066FF]">
+        <h3 className="text-[1rem] font-semibold text-deep-charcoal transition-colors group-hover:text-electric-blue">
           {title}
         </h3>
-        <p className="mt-1.5 text-[0.875rem] leading-relaxed text-[#4B5563]">
+        <p className="mt-1.5 text-[0.875rem] leading-relaxed text-cool-gray">
           {description}
         </p>
 
-        <div className="mt-4 flex items-center gap-1.5 text-[0.8rem] font-semibold text-[#0066FF]">
+        <div className="mt-4 flex items-center gap-1.5 text-[0.8rem] font-semibold text-electric-blue">
           <span>Learn more</span>
           <ArrowRight
             className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
@@ -173,16 +165,23 @@ function ServiceCard({
       </div>
     </motion.a>
   );
-}
+});
 
 export default function ServicesSection() {
   return (
     <section
-      className="bg-white py-20 sm:py-24 lg:py-28"
+      className="bg-soft-white py-20 sm:py-24 lg:py-28"
       aria-labelledby="services-heading"
     >
       <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-8">
-        <SectionHeader />
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55, ease: EASE }}
+        >
+          <SectionHeader />
+        </motion.div>
 
         <motion.div
           className="mt-14 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-5 lg:mt-20 lg:grid-cols-3 lg:gap-6"
