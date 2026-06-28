@@ -280,3 +280,59 @@ body {
   outline: 2px solid var(--electric-blue);
   outline-offset: 2px;
 }
+
+/* =====================================================
+   Desktop Navigation — Premium Underline Interaction
+   ===================================================== */
+
+.desktop-nav-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  transition: color 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.desktop-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2.5px;
+  border-radius: 2px;
+  background-color: var(--nav-underline-color, var(--deep-navy-tint));
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+  pointer-events: none;
+}
+
+.desktop-nav-link--on-light {
+  color: var(--deep-navy-tint);
+  --nav-underline-color: var(--deep-navy-tint);
+}
+
+.desktop-nav-link--on-light:hover,
+.desktop-nav-link--on-light:focus-visible {
+  color: var(--slate-blue);
+}
+
+.desktop-nav-link--on-dark {
+  color: rgba(244, 246, 248, 0.8);
+  --nav-underline-color: var(--electric-blue);
+}
+
+.desktop-nav-link--on-dark:hover,
+.desktop-nav-link--on-dark:focus-visible {
+  color: var(--soft-white);
+}
+
+.desktop-nav-link:hover::after,
+.desktop-nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.desktop-nav-link:focus-visible {
+  outline: none;
+}

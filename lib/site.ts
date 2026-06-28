@@ -3,7 +3,7 @@ export const SITE = {
   shortName: "Precision Plumbing",
   tagline: "Premium Plumbing, On Your Schedule.",
   description:
-    "Premium plumbing in McKinney, Denton, and Rockwall, TX. Flat-rate upfront pricing, licensed background-checked technicians, and live arrival tracking. 24/7 emergency service.",
+    "Professional emergency plumbing, leak repair, drain cleaning, water heater services, pipe repair, and sewer line services across McKinney, Denton, and Rockwall, Texas. Licensed plumbers, upfront pricing, 24/7 emergency response.",
   url:
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://precisionplumbingtexas.com",
   phone: "(773) 249-0630",
@@ -24,12 +24,7 @@ export const SITE = {
   openingHours: "Mo-Su 00:00-23:59",
   foundingYear: 2004,
   serviceCities: ["McKinney", "Denton", "Rockwall"] as const,
-  social: {
-    facebook: "https://www.facebook.com/",
-    instagram: "https://www.instagram.com/",
-    linkedin: "https://www.linkedin.com/",
-    twitter: "https://twitter.com/",
-  },
+  social: {} satisfies Partial<Record<"facebook" | "instagram" | "linkedin" | "twitter", string>>,
 } as const;
 
 export const NAV_LINKS = [

@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import CountUp from "@/components/ui/CountUp";
+import DesktopNavLink from "@/components/DesktopNavLink";
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
@@ -173,13 +174,14 @@ function HeroNavigation({
           aria-label="Main navigation"
         >
           {NAV_LINKS.map((link) => (
-            <a
+            <DesktopNavLink
               key={link.label}
               href={link.href}
-              className="relative inline-flex items-center gap-1 rounded-lg px-3 py-2 text-[0.9rem] font-medium text-soft-white/80 transition-colors hover:text-white"
+              variant="dark"
+              className="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-[0.9rem] font-medium"
             >
               {link.label}
-            </a>
+            </DesktopNavLink>
           ))}
         </nav>
 

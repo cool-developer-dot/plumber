@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Menu, Phone, X } from "lucide-react";
+import DesktopNavLink from "@/components/DesktopNavLink";
 import { NAV_LINKS, SITE } from "@/lib/site";
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
@@ -43,13 +44,13 @@ export default function SiteHeader() {
           aria-label="Main navigation"
         >
           {NAV_LINKS.map((link) => (
-            <Link
+            <DesktopNavLink
               key={link.label}
               href={link.href}
-              className="text-[0.88rem] font-medium text-deep-navy-tint transition-colors hover:text-electric-blue"
+              className="text-[0.88rem] font-medium"
             >
               {link.label}
-            </Link>
+            </DesktopNavLink>
           ))}
         </nav>
 

@@ -5,7 +5,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, ExternalLink, MapPin, Phone } from "lucide-react";
 import type { Landmark, ServiceArea } from "@/lib/service-areas";
-import SiteHeader from "@/components/SiteHeader";
+import { SERVICES } from "@/lib/services";
+import { SITE } from "@/lib/site";
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
@@ -83,16 +84,11 @@ export default function AreaDetailPage({ area }: { area: ServiceArea }) {
 
   return (
     <>
-      <SiteHeader />
-
-      {/* Mobile spacer for sticky CTA */}
-      <div className="h-0 lg:hidden" aria-hidden="true" />
-
       {/* Hero banner */}
       <section className="relative h-[220px] overflow-hidden sm:h-[260px] lg:h-[300px]">
         <Image
-          src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=1600&q=80"
-          alt=""
+          src="/image.webp"
+          alt={`Licensed plumber serving ${area.name}, ${area.stateAbbr}`}
           fill
           priority
           sizes="100vw"
@@ -179,31 +175,35 @@ export default function AreaDetailPage({ area }: { area: ServiceArea }) {
                 Plumbing Solutions for {area.name}
               </h3>
               <p className="mt-4 text-[0.92rem] leading-relaxed text-cool-gray">
-                {area.serviceBlurb}{" "}
-                Whether you need{" "}
-                <Link
-                  href="/services/drain-cleaning"
-                  className="font-medium text-electric-blue hover:underline"
-                >
-                  drain cleaning
-                </Link>
-                ,{" "}
-                <Link
-                  href="/services/sewer-line"
-                  className="font-medium text-electric-blue hover:underline"
-                >
-                  sewer repair
-                </Link>
-                , or emergency pipe repair, Precision Plumbing Texas is your trusted local
-                plumber in {area.name}.
+                {area.serviceBlurb} Our licensed team provides{" "}
+                {SERVICES.map((service, index) => (
+                  <span key={service.slug}>
+                    {index > 0 && index === SERVICES.length - 1 ? ", and " : index > 0 ? ", " : ""}
+                    <Link
+                      href={service.href}
+                      className="font-medium text-electric-blue hover:underline"
+                    >
+                      {service.title.toLowerCase()}
+                    </Link>
+                  </span>
+                ))}{" "}
+                throughout {area.name} and surrounding neighborhoods.
               </p>
               <a
-                href="tel:7732490630"
+                href={`tel:${SITE.phoneTel}`}
                 className="mt-5 inline-flex items-center gap-2 text-[0.95rem] font-bold text-deep-charcoal transition-colors hover:text-electric-blue"
               >
                 <Phone className="h-4 w-4" strokeWidth={2} aria-hidden />
-                Call (773) 249-0630 for service in {area.name}
+                Call {SITE.phone} for service in {area.name}
               </a>
+              <p className="mt-4">
+                <Link
+                  href="/contact"
+                  className="text-[0.9rem] font-semibold text-electric-blue hover:underline"
+                >
+                  Schedule service online
+                </Link>
+              </p>
             </div>
 
             {/* Mobile map — shown below content on small screens */}

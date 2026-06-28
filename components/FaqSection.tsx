@@ -13,47 +13,23 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
+import { HOME_FAQ_ITEMS } from "@/lib/home-faq";
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
-const FAQ_ITEMS = [
-  {
-    question: "How quickly can you arrive?",
-    answer:
-      "For emergency calls, our average response time is under 60 minutes. Same-day appointments are available for non-emergency services, and we always provide an estimated arrival window when you book.",
-    icon: Clock,
-  },
-  {
-    question: "Do you offer 24/7 emergency plumbing?",
-    answer:
-      "Yes. Our emergency plumbing team is available 24 hours a day, 7 days a week — including holidays. Call us anytime and a licensed technician will be dispatched to your location.",
-    icon: Zap,
-  },
-  {
-    question: "Are your plumbers licensed and insured?",
-    answer:
-      "Every technician on our team is fully licensed, bonded, and insured. We conduct background checks and ongoing training to ensure the highest standard of professional service.",
-    icon: ShieldCheck,
-  },
-  {
-    question: "What areas do you serve?",
-    answer:
-      "We proudly serve McKinney, Denton, and Rockwall, Texas — including surrounding neighborhoods in Collin and Denton counties. Same-day and emergency service available in all three cities.",
-    icon: MapPin,
-  },
-  {
-    question: "Do you provide upfront pricing?",
-    answer:
-      "Absolutely. We provide clear, written estimates before any work begins. You'll know exactly what to expect — no hidden fees, no surprise charges on your final bill.",
-    icon: Receipt,
-  },
-  {
-    question: "Do you install water heaters?",
-    answer:
-      "Yes. We install, repair, and maintain all major water heater brands — tank and tankless. Our team will help you choose the right unit for your home and handle the full installation.",
-    icon: Flame,
-  },
-] as const;
+const FAQ_ICONS: LucideIcon[] = [
+  Clock,
+  Zap,
+  ShieldCheck,
+  MapPin,
+  Receipt,
+  Flame,
+];
+
+const FAQ_ITEMS = HOME_FAQ_ITEMS.map((item, index) => ({
+  ...item,
+  icon: FAQ_ICONS[index] ?? MessageCircle,
+}));
 
 const ToggleIcon = memo(function ToggleIcon({ isOpen }: { isOpen: boolean }) {
   return (

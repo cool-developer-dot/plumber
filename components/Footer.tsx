@@ -2,8 +2,9 @@
 
 import { memo } from "react";
 import Link from "next/link";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
-import { SITE } from "@/lib/site";
+import { ArrowRight, Clock, Mail, Phone } from "lucide-react";
+import { NAV_LINKS, SITE } from "@/lib/site";
+import { SERVICES } from "@/lib/services";
 import { SERVICE_CITY_CARDS } from "@/lib/service-areas";
 
 function SocialIcon({ name }: { name: string }) {
@@ -38,47 +39,42 @@ function SocialIcon({ name }: { name: string }) {
   }
 }
 
-const QUICK_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/#services-heading" },
-  { label: "Locations", href: "/#service-areas-heading" },
-  { label: "About", href: "/#why-choose-heading" },
-  { label: "Reviews", href: "/#testimonials-heading" },
-  { label: "Contact", href: "/contact" },
-] as const;
+const QUICK_LINKS = NAV_LINKS;
 
-const SERVICE_LINKS = [
-  { label: "Emergency Plumbing", href: "/services/emergency-plumbing" },
-  { label: "Leak Repair", href: "/services/leak-repair" },
-  { label: "Drain Cleaning", href: "/services/drain-cleaning" },
-  { label: "Water Heater Services", href: "/services/water-heater" },
-  { label: "Pipe Repair", href: "/services/pipe-repair" },
-  { label: "Sewer Line Services", href: "/services/sewer-line" },
-] as const;
+const SERVICE_LINKS = SERVICES.map((service) => ({
+  label: service.title,
+  href: service.href,
+}));
 
-const SOCIAL_LINKS = [
-  { label: "Facebook", href: "#" },
-  { label: "Instagram", href: "#" },
-  { label: "LinkedIn", href: "#" },
-  { label: "Twitter", href: "#" },
-] as const;
+const SOCIAL_LINKS = Object.entries(SITE.social)
+  .filter((entry): entry is [string, string] => Boolean(entry[1]))
+  .map(([key, href]) => ({
+    label: key.charAt(0).toUpperCase() + key.slice(1),
+    href,
+  }));
 
 const LEGAL_LINKS = [
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
-  { label: "Sitemap", href: "/sitemap" },
+  { label: "Sitemap", href: "/sitemap.xml" },
+] as const;
+
+const TRUST_BADGES = [
+  "Licensed & Insured",
+  "Flat-Rate Pricing",
+  "Satisfaction Guaranteed",
 ] as const;
 
 function Logo() {
   return (
     <Link
       href="/"
-      className="group inline-flex items-center gap-2.5"
+      className="group inline-flex items-center gap-3"
       aria-label="Precision Plumbing Texas home"
     >
       <svg
-        width="36"
-        height="36"
+        width="40"
+        height="40"
         viewBox="0 0 36 36"
         fill="none"
         aria-hidden
@@ -101,14 +97,135 @@ function Logo() {
         <circle cx="18" cy="18" r="2" fill="white" fillOpacity="0.3" />
       </svg>
       <div className="leading-none">
-        <span className="block text-[1.05rem] font-bold tracking-tight text-soft-white transition-colors group-hover:text-electric-blue-bright">
+        <span className="block text-[1.1rem] font-bold tracking-tight text-soft-white transition-colors group-hover:text-electric-blue-bright">
           Precision
         </span>
-        <span className="mt-0.5 block text-[0.58rem] font-semibold tracking-[0.22em] text-electric-blue">
+        <span className="mt-1 block text-[0.6rem] font-semibold tracking-[0.24em] text-electric-blue">
           PLUMBING TEXAS
         </span>
       </div>
     </Link>
+  );
+}
+
+function FooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  const isInternal = href.startsWith("/") && !href.startsWith("//");
+
+  const className =
+    "text-[0.875rem] leading-relaxed text-metallic-silver transition-colors duration-200 hover:text-soft-white";
+
+  if (isInternal) {
+    return (
+      <Link href={href} className={className}>
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <a href={href} className={className}>
+      {children}
+    </a>
+  );
+}
+
+function FooterColumn({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <h3 className="mb-5 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-electric-blue">
+        {title}
+      </h3>
+      {children}
+    </div>
+  );
+}
+
+function ContactPanel() {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-soft-white/[0.08] bg-gradient-to-br from-rich-navy/80 via-deep-navy-tint/60 to-deep-charcoal shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
+      <div className="border-b border-soft-white/[0.06] px-6 py-5 sm:px-7">
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-electric-blue">
+            Get In Touch
+          </p>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-electric-blue/25 bg-electric-blue/[0.08] px-2.5 py-1">
+            <span className="relative flex h-1.5 w-1.5" aria-hidden>
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-electric-blue opacity-50" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-electric-blue" />
+            </span>
+            <span className="text-[0.65rem] font-semibold uppercase tracking-wide text-electric-blue-bright">
+              24/7 Available
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div className="space-y-5 px-6 py-6 sm:px-7 sm:py-7">
+        <a
+          href={`tel:${SITE.phoneTel}`}
+          className="group block rounded-xl border border-electric-blue/20 bg-electric-blue/[0.08] px-5 py-4 transition-all duration-200 hover:border-electric-blue/40 hover:bg-electric-blue/[0.12]"
+        >
+          <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-metallic-silver">
+            <Phone className="h-3.5 w-3.5 text-electric-blue" strokeWidth={2} aria-hidden />
+            Call Now
+          </span>
+          <span className="mt-2 block whitespace-nowrap text-[1.35rem] font-bold tracking-tight text-soft-white tabular-nums transition-colors group-hover:text-electric-blue-bright sm:text-[1.5rem]">
+            {SITE.phone}
+          </span>
+        </a>
+
+        <a
+          href={`mailto:${SITE.email}`}
+          className="group flex items-center gap-3 rounded-xl px-1 py-1 transition-colors hover:text-electric-blue-bright"
+        >
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-soft-white/[0.08] bg-white/[0.04] text-electric-blue transition-colors group-hover:border-electric-blue/25 group-hover:bg-electric-blue/[0.1]">
+            <Mail className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+          </span>
+          <span className="min-w-0">
+            <span className="block text-[0.68rem] font-medium uppercase tracking-wider text-cool-gray">
+              Email
+            </span>
+            <span className="mt-0.5 block truncate text-[0.9rem] font-medium text-soft-white transition-colors group-hover:text-electric-blue-bright">
+              {SITE.email}
+            </span>
+          </span>
+        </a>
+
+        <div className="flex items-center gap-3 px-1">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-soft-white/[0.08] bg-white/[0.04] text-electric-blue">
+            <Clock className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+          </span>
+          <span>
+            <span className="block text-[0.68rem] font-medium uppercase tracking-wider text-cool-gray">
+              Hours
+            </span>
+            <span className="mt-0.5 block text-[0.9rem] font-medium text-soft-white">
+              Emergency service, 24 hours a day
+            </span>
+          </span>
+        </div>
+
+        <a
+          href={`tel:${SITE.phoneTel}`}
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-electric-blue px-5 py-3.5 text-[0.9rem] font-semibold text-white shadow-[0_4px_20px_rgba(45,140,255,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-electric-blue-bright hover:shadow-[0_8px_28px_rgba(45,140,255,0.45)] active:translate-y-0"
+        >
+          Request Service
+          <ArrowRight className="h-4 w-4" strokeWidth={2.25} aria-hidden />
+        </a>
+      </div>
+    </div>
   );
 }
 
@@ -117,201 +234,116 @@ export default memo(function Footer() {
 
   return (
     <footer className="relative bg-deep-charcoal">
-      {/* Top gradient divider */}
       <div
-        className="h-px w-full bg-gradient-to-r from-transparent via-electric-blue/20 to-transparent"
+        className="h-px w-full bg-gradient-to-r from-transparent via-electric-blue/25 to-transparent"
         aria-hidden
       />
 
       <div className="mx-auto max-w-[1320px] px-5 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10 xl:gap-12">
-          {/* Column 1 — Brand */}
-          <div className="lg:col-span-4">
+        {/* Brand + Contact */}
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-16 xl:gap-20">
+          <div className="max-w-lg">
             <Logo />
-            <p className="mt-5 max-w-xs text-[0.875rem] leading-relaxed text-metallic-silver">
-              Your Trusted Local Plumbing Experts — flat-rate pricing, licensed
-              technicians, and live arrival tracking since {SITE.foundingYear}.
-            </p>
-            <p className="mt-3 text-[0.8rem] font-medium text-electric-blue">
-              Licensed · Insured · Satisfaction Guaranteed
+            <p className="mt-6 text-[0.95rem] leading-[1.75] text-metallic-silver">
+              North Texas&apos;s trusted plumbing partner since {SITE.foundingYear}.
+              Licensed technicians, upfront flat-rate pricing, and live arrival
+              tracking on every visit.
             </p>
 
-            <div className="mt-6 flex items-center gap-2">
-              {SOCIAL_LINKS.map(({ label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-soft-white/[0.08] bg-white/[0.04] text-metallic-silver transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:border-electric-blue/20 hover:bg-electric-blue/[0.1] hover:text-electric-blue-bright"
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {TRUST_BADGES.map((badge) => (
+                <li
+                  key={badge}
+                  className="rounded-full border border-soft-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-[0.72rem] font-medium text-metallic-silver"
                 >
-                  <SocialIcon name={label} />
-                </a>
+                  {badge}
+                </li>
               ))}
-            </div>
+            </ul>
+
+            {SOCIAL_LINKS.length > 0 ? (
+              <div className="mt-8 flex items-center gap-2.5">
+                {SOCIAL_LINKS.map(({ label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="flex h-10 w-10 items-center justify-center rounded-xl border border-soft-white/[0.08] bg-white/[0.03] text-metallic-silver transition-all duration-200 hover:-translate-y-0.5 hover:border-electric-blue/25 hover:bg-electric-blue/[0.1] hover:text-electric-blue-bright"
+                  >
+                    <SocialIcon name={label} />
+                  </a>
+                ))}
+              </div>
+            ) : null}
           </div>
 
-          {/* Column 2 — Quick Links */}
-          <div>
-            <h3 className="mb-5 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-electric-blue">
-              Quick Links
-            </h3>
+          <ContactPanel />
+        </div>
+
+        {/* Navigation columns */}
+        <div className="mt-16 grid gap-10 border-t border-soft-white/[0.06] pt-14 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3 lg:gap-12 lg:pt-16">
+          <FooterColumn title="Quick Links">
             <ul className="flex flex-col gap-3">
               {QUICK_LINKS.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="group inline-flex items-center text-[0.875rem] text-metallic-silver transition-colors hover:text-electric-blue-bright"
-                  >
-                    <span className="relative">
-                      {link.label}
-                      <span className="absolute -bottom-px left-0 h-px w-0 bg-electric-blue transition-all duration-300 group-hover:w-full" />
-                    </span>
-                  </a>
+                  <FooterLink href={link.href}>{link.label}</FooterLink>
                 </li>
               ))}
             </ul>
-          </div>
+          </FooterColumn>
 
-          {/* Column 3 — Service Areas */}
-          <div>
-            <h3 className="mb-5 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-electric-blue">
-              Service Areas
-            </h3>
+          <FooterColumn title="Service Areas">
             <ul className="flex flex-col gap-3">
               {SERVICE_CITY_CARDS.map((area) => (
                 <li key={area.slug}>
-                  <a
-                    href={`/areas/${area.slug}`}
-                    className="group inline-flex items-center text-[0.875rem] text-metallic-silver transition-colors hover:text-electric-blue-bright"
-                  >
-                    <span className="relative">
-                      {area.name}, {area.stateAbbr}
-                      <span className="absolute -bottom-px left-0 h-px w-0 bg-electric-blue transition-all duration-300 group-hover:w-full" />
-                    </span>
-                  </a>
+                  <FooterLink href={`/areas/${area.slug}`}>
+                    {area.name}, {area.stateAbbr}
+                  </FooterLink>
                 </li>
               ))}
             </ul>
-          </div>
+          </FooterColumn>
 
-          {/* Column 4 — Services */}
-          <div>
-            <h3 className="mb-5 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-electric-blue">
-              Services
-            </h3>
-            <ul className="flex flex-col gap-3">
+          <FooterColumn title="Services">
+            <ul className="flex flex-col gap-3 sm:col-span-2 lg:col-span-1">
               {SERVICE_LINKS.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="group inline-flex items-center text-[0.875rem] text-metallic-silver transition-colors hover:text-electric-blue-bright"
-                  >
-                    <span className="relative">
-                      {link.label}
-                      <span className="absolute -bottom-px left-0 h-px w-0 bg-electric-blue transition-all duration-300 group-hover:w-full" />
-                    </span>
-                  </a>
+                  <FooterLink href={link.href}>{link.label}</FooterLink>
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* Column 5 — Contact */}
-          <div>
-            <h3 className="mb-5 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-electric-blue">
-              Contact
-            </h3>
-            <ul className="flex flex-col gap-4">
-              <li>
-                <a
-                  href={`tel:${SITE.phoneTel}`}
-                  className="group flex items-start gap-3"
-                >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-electric-blue/[0.1] text-electric-blue transition-colors group-hover:bg-electric-blue group-hover:text-white">
-                    <Phone className="h-4 w-4" strokeWidth={1.75} aria-hidden />
-                  </span>
-                  <span>
-                    <span className="block text-[0.72rem] font-medium uppercase tracking-wider text-cool-gray">
-                      Phone
-                    </span>
-                    <span className="mt-0.5 block text-[0.9rem] font-semibold text-soft-white group-hover:text-electric-blue-bright">
-                      {SITE.phone}
-                    </span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`mailto:${SITE.email}`}
-                  className="group flex items-start gap-3"
-                >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-electric-blue/[0.1] text-electric-blue transition-colors group-hover:bg-electric-blue group-hover:text-white">
-                    <Mail className="h-4 w-4" strokeWidth={1.75} aria-hidden />
-                  </span>
-                  <span>
-                    <span className="block text-[0.72rem] font-medium uppercase tracking-wider text-cool-gray">
-                      Email
-                    </span>
-                    <span className="mt-0.5 block text-[0.875rem] font-medium text-soft-white group-hover:text-electric-blue-bright">
-                      {SITE.email}
-                    </span>
-                  </span>
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-electric-blue/[0.1] text-electric-blue">
-                  <MapPin className="h-4 w-4" strokeWidth={1.75} aria-hidden />
-                </span>
-                <span>
-                  <span className="block text-[0.72rem] font-medium uppercase tracking-wider text-cool-gray">
-                    Service Area
-                  </span>
-                  <span className="mt-0.5 block text-[0.875rem] leading-relaxed text-metallic-silver">
-                    McKinney, Denton &amp; Rockwall
-                    <br />
-                    North Texas
-                  </span>
-                </span>
-              </li>
-            </ul>
-
-            <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-electric-blue/20 bg-electric-blue/[0.06] px-3.5 py-1.5">
-              <span className="relative flex h-2 w-2" aria-hidden>
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-electric-blue opacity-40" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-electric-blue" />
-              </span>
-              <Clock className="h-3.5 w-3.5 text-electric-blue" strokeWidth={2} aria-hidden />
-              <span className="text-[0.72rem] font-semibold text-electric-blue">
-                24/7 Emergency Available
-              </span>
-            </div>
-          </div>
+          </FooterColumn>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-soft-white/[0.06] bg-deep-charcoal/80">
+      <div className="border-t border-soft-white/[0.06] bg-[#101216]">
         <div className="mx-auto flex max-w-[1320px] flex-col items-center justify-between gap-4 px-5 py-6 sm:flex-row sm:px-6 lg:px-8">
           <p className="text-center text-[0.8rem] text-cool-gray sm:text-left">
-            &copy; {year} Precision Plumbing Texas. All rights reserved.
+            &copy; {year} {SITE.name}. All rights reserved.
           </p>
-          <nav aria-label="Legal navigation">
-            <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-              {LEGAL_LINKS.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="group inline-flex items-center text-[0.875rem] text-metallic-silver transition-colors hover:text-electric-blue-bright"
-                  >
-                    <span className="relative">
-                      {link.label}
-                      <span className="absolute -bottom-px left-0 h-px w-0 bg-electric-blue transition-all duration-300 group-hover:w-full" />
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-8">
+            <a
+              href={`tel:${SITE.phoneTel}`}
+              className="hidden whitespace-nowrap text-[0.85rem] font-semibold text-metallic-silver transition-colors hover:text-electric-blue-bright sm:inline-flex sm:items-center sm:gap-2"
+            >
+              <Phone className="h-3.5 w-3.5 text-electric-blue" strokeWidth={2} aria-hidden />
+              {SITE.phone}
+            </a>
+
+            <nav aria-label="Legal navigation">
+              <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+                {LEGAL_LINKS.map((link) => (
+                  <li key={link.label}>
+                    <FooterLink href={link.href}>{link.label}</FooterLink>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
     </footer>

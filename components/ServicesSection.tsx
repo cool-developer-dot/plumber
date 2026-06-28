@@ -13,59 +13,18 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
+import { SERVICES } from "@/lib/services";
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
-const SERVICES = [
-  {
-    title: "Emergency Plumbing",
-    description: "24/7 rapid response for urgent plumbing crises. Licensed technicians dispatched immediately.",
-    href: "/services/emergency-plumbing",
-    icon: Zap,
-    image: "/services/emergency-plumbing.jpg",
-    imageAlt: "Emergency plumber responding to an urgent plumbing call",
-  },
-  {
-    title: "Leak Repair",
-    description: "Precision detection and lasting leak solutions. We find the source and fix it right.",
-    href: "/services/leak-repair",
-    icon: Droplets,
-    image: "/services/leak-repair.jpg",
-    imageAlt: "Professional plumber repairing a water leak",
-  },
-  {
-    title: "Drain Cleaning",
-    description: "Clear blockages and restore full water flow with advanced drain technology.",
-    href: "/services/drain-cleaning",
-    icon: Waves,
-    image: "/services/drain-cleaning.jpg",
-    imageAlt: "Plumber performing professional drain cleaning",
-  },
-  {
-    title: "Water Heater Services",
-    description: "Expert installation, repair, and maintenance for tank and tankless systems.",
-    href: "/services/water-heater",
-    icon: Flame,
-    image: "/services/water-heater.jpg",
-    imageAlt: "Technician servicing a residential water heater",
-  },
-  {
-    title: "Pipe Repair",
-    description: "Durable repairs for every pipe system — copper, PVC, PEX, and more.",
-    href: "/services/pipe-repair",
-    icon: Wrench,
-    image: "/services/pipe-repair.jpg",
-    imageAlt: "Copper and PVC pipe repair work",
-  },
-  {
-    title: "Sewer Line Services",
-    description: "Advanced diagnostics and complete sewer solutions with camera inspection.",
-    href: "/services/sewer-line",
-    icon: ShieldCheck,
-    image: "/services/sewer-line.jpg",
-    imageAlt: "Professional sewer line inspection and repair",
-  },
-] as const;
+const SERVICE_ICONS: Record<string, LucideIcon> = {
+  "emergency-plumbing": Zap,
+  "leak-repair": Droplets,
+  "drain-cleaning": Waves,
+  "water-heater": Flame,
+  "pipe-repair": Wrench,
+  "sewer-line": ShieldCheck,
+};
 
 const containerVariants = {
   hidden: {},
@@ -191,7 +150,15 @@ export default function ServicesSection() {
           viewport={{ once: true, margin: "-60px" }}
         >
           {SERVICES.map((service) => (
-            <ServiceCard key={service.title} {...service} />
+            <ServiceCard
+              key={service.title}
+              title={service.title}
+              description={service.description}
+              href={service.href}
+              icon={SERVICE_ICONS[service.slug] ?? Wrench}
+              image={service.image}
+              imageAlt={service.imageAlt}
+            />
           ))}
         </motion.div>
       </div>

@@ -5,11 +5,13 @@ import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import HowItWorksSection from "@/components/HowItWorksSection";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import LocalBusinessJsonLd from "@/components/seo/LocalBusinessJsonLd";
 import MobileConversion from "@/components/MobileConversion";
 import ServiceAreasSection from "@/components/ServiceAreasSection";
 import ServicesSection from "@/components/ServicesSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
+import { HOME_FAQ_ITEMS } from "@/lib/home-faq";
 import { SITE } from "@/lib/site";
 
 const TestimonialsSection = dynamic(
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
   title:
     "Emergency Plumbing Services | Licensed Plumbers in McKinney, Denton & Rockwall TX",
   description:
-    "Professional emergency plumbing, leak repair, drain cleaning, water heater installation, and same-day plumbing services across McKinney, Denton, and Rockwall, Texas.",
+    "Need a licensed plumber fast? Precision Plumbing Texas offers 24/7 emergency plumbing, leak repair, drain cleaning, water heaters, pipe repair, and sewer services in McKinney, Denton & Rockwall. Upfront pricing. Call now.",
   alternates: {
     canonical: SITE.url,
   },
@@ -29,7 +31,7 @@ export const metadata: Metadata = {
     title:
       "Emergency Plumbing Services | Licensed Plumbers in McKinney, Denton & Rockwall TX",
     description:
-      "Professional emergency plumbing, leak repair, drain cleaning, water heater installation, and same-day plumbing services across McKinney, Denton, and Rockwall, Texas.",
+      "Need a licensed plumber fast? Precision Plumbing Texas offers 24/7 emergency plumbing, leak repair, drain cleaning, water heaters, pipe repair, and sewer services in McKinney, Denton & Rockwall. Upfront pricing. Call now.",
     url: SITE.url,
     type: "website",
     locale: "en_US",
@@ -48,7 +50,7 @@ export const metadata: Metadata = {
     title:
       "Emergency Plumbing Services | Licensed Plumbers in McKinney, Denton & Rockwall TX",
     description:
-      "Professional emergency plumbing, leak repair, drain cleaning, water heater installation, and same-day plumbing services across McKinney, Denton, and Rockwall, Texas.",
+      "Need a licensed plumber fast? Precision Plumbing Texas offers 24/7 emergency plumbing, leak repair, drain cleaning, water heaters, pipe repair, and sewer services in McKinney, Denton & Rockwall. Upfront pricing. Call now.",
     images: ["/image.webp"],
   },
   robots: {
@@ -74,6 +76,7 @@ export default function Home() {
         Skip to main content
       </a>
       <LocalBusinessJsonLd />
+      <FaqJsonLd items={HOME_FAQ_ITEMS} />
       <main
         id="main-content"
       >

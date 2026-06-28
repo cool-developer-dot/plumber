@@ -23,8 +23,7 @@ export const metadata: Metadata = {
     default: `${SITE.name} | ${SITE.tagline}`,
     template: `%s | ${SITE.name}`,
   },
-  description:
-    "Professional emergency plumbing, leak repair, drain cleaning, water heater installation, and same-day plumbing services across McKinney, Denton, and Rockwall, Texas.",
+  description: SITE.description,
   keywords: [...KEYWORDS],
   authors: [{ name: SITE.name }],
   creator: SITE.name,
